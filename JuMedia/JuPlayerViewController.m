@@ -7,8 +7,7 @@
 //
 
 #import "JuPlayerViewController.h"
-#import "JuPlayerView.h"
-#import "JuPalyCtrView.h"
+#import "JuPlayerVideoView.h"
 #import "UIView+JuLayGroup.h"
 @interface JuPlayerViewController ()
 
@@ -18,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    JuPlayerView *vew=[[JuPlayerView alloc]init];
+    JuPlayerVideoView *vew=[[JuPlayerVideoView alloc]init];
 //    vew.frame=self.view.bounds;
     [self.view addSubview:vew];
     vew.juEdge(UIEdgeInsetsMake(0, 0, 0, 0));
@@ -26,9 +25,6 @@
     NSURL *remoteUrl = [NSURL fileURLWithPath:path];
     [vew juPalyerItemWithURL:remoteUrl];
 
-    JuPalyCtrView *_ju_playCtrView=[[JuPalyCtrView alloc]init];
-    [vew addSubview:_ju_playCtrView];
-    _ju_playCtrView.juSafeFrame(CGRectMake(0, -0.01, 0, 44));
     // Do any additional setup after loading the view.
 }
 
