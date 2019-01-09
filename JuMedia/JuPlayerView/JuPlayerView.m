@@ -37,11 +37,12 @@
     if (self) {
         [self juSetting];
         [self shSetPlayer];
+        [self shSetPlayControView];
     }
     return self;
 }
 -(void)juSetting{
-    self.backgroundColor = [UIColor lightGrayColor];
+    self.backgroundColor = [UIColor blackColor];
     self.isCanPlay = NO;
     self.ju_needBuffer = NO;
     self.isSeeking = NO;
@@ -73,10 +74,11 @@
 - (void)videoPlayEnd:(NSNotification *)notic{
     NSLog(@"视频播放结束");
     if (ju_avFullWindow) {
-        [self juTouchFull:NO];
+        [self juFullScreen:NO];
     }
     [self juUseDelegateWith:JuAVPlayerStatusPlayEnd];
     [self.ju_player seekToTime:kCMTimeZero];
+    [self juPause];
 }
 /** 视频异常中断 */
 - (void)videoPlayError:(NSNotification *)notic{
@@ -109,6 +111,7 @@
     ju_loadActivity=[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     [self addSubview:ju_loadActivity];
 }
+-(void)shSetPlayControView{}
 - (void)layoutSubviews{
     [super layoutSubviews];
     _playerLayer.frame = self.bounds;
@@ -133,7 +136,7 @@
     [self addObserverWithPlayItem:_playerItem];
     [self addNotificatonForPlayer];
 
-    [self juPlay];
+//    [self juPlay];
     [self addPlayerObserver];
 
 }
@@ -142,8 +145,7 @@
 /** 给player 添加 time observer */
 - (void)addPlayerObserver{
     __weak typeof(self)weakSelf = self;
-    ju_timeObser = [self.ju_player addPeriodicTimeObserverForInterval:CMTimeMake(1.0, 1.0) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
-
+    ju_timeObser = [self.ju_player addPeriodicTimeObserverForInterval:CMTimeMake(1.0, 30.0) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
         float current = CMTimeGetSeconds(time);
         if (weakSelf.isSeeking) {
             return;
@@ -176,15 +178,10 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
     AVPlayerItem *item = object;
     if ([keyPath isEqualToString:@"status"]) {// 播放状态
-
         [self handleStatusWithPlayerItem:item];
-
     } else if ([keyPath isEqualToString:@"loadedTimeRanges"]) {// 缓冲进度
-
         [self handleLoadedTimeRangesWithPlayerItem:item];
-
     } else if ([keyPath isEqualToString:@"playbackBufferEmpty"]) {// 跳转后没数据
-
         if (self.isCanPlay) {
             NSLog(@"跳转后没数据");
             self.ju_needBuffer = YES;
@@ -192,14 +189,10 @@
         }
     } else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"]) {// 跳转后有数据
         if (self.isCanPlay && self.ju_needBuffer) {
-
             NSLog(@"跳转后有数据");
-
             self.ju_needBuffer = NO;
-
             [self juUseDelegateWith:JuAVPlayerStatusCacheEnd];
         }
-
     }
 }
 /**
@@ -288,14 +281,16 @@
 /** 拖动视频进度 */
 - (void)juSeekPlayerTimeTo:(NSTimeInterval)time{
     [self juStartToSeek];
-    [self.ju_player seekToTime:CMTimeMake(time, 1.0) completionHandler:^(BOOL finished) {
-    }];
+
+//    [self.ju_player seekToTime:CMTimeMake(time, 1.0) completionHandler:^(BOOL finished) {
+//    }];
+    [self.ju_player seekToTime:CMTimeMake(time, 1.0) toleranceBefore:CMTimeMake(1, 1000) toleranceAfter:CMTimeMake(1, 1000)];
 }
 - (void)juSetVolume:(float)volume{
     self.ju_player.volume=volume;
 }
 /**全屏切换*/
--(void)juTouchFull:(BOOL)isFull{
+-(void)juFullScreen:(BOOL)isFull{
     if (isFull) {
         if (!ju_supView) {
             originalFrame=self.frame;

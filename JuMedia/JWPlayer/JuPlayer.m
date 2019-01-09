@@ -7,8 +7,8 @@
 //
 #define WeakSealf(weakself) __weak typeof(self) weakself = self;
 #import "JuPlayer.h"
-#import "UIDevice+JWDevice.h"
-#import "JWFullViewController.h"
+#import "UIDevice+JuOrientnatation.h"
+#import "JuPlayFullVC.h"
 @interface JuPlayer()
 {
     BOOL isIntoBackground;
@@ -31,7 +31,7 @@
 @property(nonatomic,assign)CGRect oldFrame;
 @property(nonatomic,strong)UIView*oldView;
 @property(nonatomic,strong)UIViewController*SuperVC;
-@property(nonatomic,strong)JWFullViewController*fullVC;
+@property(nonatomic,strong)JuPlayFullVC*fullVC;
 @property (nonatomic, strong) CADisplayLink *link;//以屏幕刷新率进行定时操作
 @property (nonatomic, assign) NSTimeInterval lastTime;
 @end
@@ -46,7 +46,7 @@
     if (self) {
 //        self.view=[[[NSBundle mainBundle] loadNibNamed:@"JWPlayer" owner:self options:nil] firstObject];
 //        [self addSubview:self.view];
-        self=[[[NSBundle mainBundle] loadNibNamed:@"JWPlayer" owner:self options:nil] firstObject];
+        self=[[[NSBundle mainBundle] loadNibNamed:@"JuPlayer" owner:self options:nil] firstObject];
         self.frame=frame;
         _oldFrame=frame;
         [self.playProgress setThumbImage:[UIImage imageNamed:@"MoviePlayer_Slider"] forState:UIControlStateNormal];
@@ -399,10 +399,10 @@
     NSString *showtimeNew = [formatter stringFromDate:d];
     return showtimeNew;
 }
--(JWFullViewController*)fullVC
+-(JuPlayFullVC*)fullVC
 {
     if (_fullVC==nil) {
-        _fullVC=[[JWFullViewController alloc]init];
+        _fullVC=[[JuPlayFullVC alloc]init];
     }
     return _fullVC;
 }

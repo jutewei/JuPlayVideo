@@ -6,7 +6,7 @@
 //  Copyright © 2016年 FMG. All rights reserved.
 //
 
-#import "UIDevice+JWDevice.h"
+#import "UIDevice+JuOrientnatation.h"
 
 @implementation UIDevice (JuOrientnatation)
 + (void)setOrientation:(UIInterfaceOrientation)orientation {

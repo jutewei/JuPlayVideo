@@ -66,6 +66,7 @@ typedef void(^JuPlayStatus)(JuAVPlayerStatus playStatus);//播放状态回调
 - (void)juSetVolume:(float)volume;
 
 /**全屏切换*/
--(void)juTouchFull:(BOOL)isFull;
+-(void)juFullScreen:(BOOL)isFull;
+
 
 @end

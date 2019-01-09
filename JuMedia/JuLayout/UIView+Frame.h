@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIView+textBounds.h"
 #import "UIView+JuLayGroup.h"
 @interface UIView (Frame)
 - (CGFloat)originX;

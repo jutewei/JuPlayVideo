@@ -28,7 +28,6 @@
 }
 -(void)shShowWindow{
     self.hidden=NO;
-
 }
 -(void)juAddView:(UIView *)view{
     [self.rootViewController.view addSubview:view];
