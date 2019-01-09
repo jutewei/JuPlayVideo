@@ -24,7 +24,6 @@
     [self addSubview:_ju_viePlayBox];
     _ju_viePlayBox.juSafeFrame(CGRectMake(0, -.01, 0, 44));
 
-
     _Ju_btnPlay=[[UIButton alloc]init];
     [_Ju_btnPlay addTarget:self action:@selector(juTouchPlay:) forControlEvents:UIControlEventTouchUpInside];
     [_Ju_btnPlay setImage:[UIImage imageNamed:@"MoviePlayer_Stop"] forState:UIControlStateNormal];
@@ -33,14 +32,14 @@
     _Ju_btnPlay.juFrame(CGRectMake(.01, 0, 44, 0));
 
     _ju_labCurrentTime=[[UILabel alloc]init];
+    _ju_labCurrentTime.text=@"00:00";
     _ju_labCurrentTime.font=[UIFont systemFontOfSize:14];
     _ju_labCurrentTime.textColor=[UIColor whiteColor];
     [_ju_viePlayBox addSubview:_ju_labCurrentTime];
     _ju_labCurrentTime.juFrame(CGRectMake(44, 0, 44, 0));
 
-
-
     _ju_labTotalTime=[[UILabel alloc]init];
+    _ju_labTotalTime.text=@"00:00";
     _ju_labTotalTime.font=[UIFont systemFontOfSize:14];
     _ju_labTotalTime.textColor=[UIColor whiteColor];
     [_ju_viePlayBox addSubview:_ju_labTotalTime];

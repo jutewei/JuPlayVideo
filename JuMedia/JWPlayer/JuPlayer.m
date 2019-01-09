@@ -264,7 +264,7 @@
         if (self.SuperVC!=nil) {
             [self.fullVC dismissViewControllerAnimated:NO completion:^{
                 
-                [_oldView addSubview:self];
+                [self->_oldView addSubview:self];
                 [self setPortraitLayout];
 
             }];

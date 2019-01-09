@@ -9,6 +9,7 @@
 #import "JuPlayerViewController.h"
 #import "JuPlayerVideoView.h"
 #import "UIView+JuLayGroup.h"
+#import "JuHTTPRequest.h"
 @interface JuPlayerViewController ()
 
 @end
@@ -21,10 +22,15 @@
 //    vew.frame=self.view.bounds;
     [self.view addSubview:vew];
     vew.juEdge(UIEdgeInsetsMake(0, 0, 0, 0));
-    NSString *path=[[NSBundle mainBundle]pathForResource:@"test2" ofType:@"MP4"];
+    NSString *path=[[NSBundle mainBundle]pathForResource:@"test" ofType:@"MOV"];
     NSURL *remoteUrl = [NSURL fileURLWithPath:path];
     [vew juPalyerItemWithURL:remoteUrl];
+    [[JuHTTPRequest sharedInstance]juDownURL:@"https://raw.githubusercontent.com/jutewei/JuPlayVideo/master/JuMedia/test2.MP4" success:^(NSString *locationUrl) {
+        NSLog(@"地址：%@",locationUrl);
+    } failblock:^(NSError *error) {
 
+    }];
+//https://raw.githubusercontent.com/jutewei/JuPlayVideo/master/JuMedia/test2.MP4
     // Do any additional setup after loading the view.
 }
 
